@@ -1,7 +1,7 @@
-﻿using BoardGamesShop.Models;
+﻿using BoardGames.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BoardGamesShop.Data
+namespace BoardGames.DataAccess
 {
     public class ApplicationDbContext: DbContext
     {

@@ -1,4 +1,5 @@
-using BoardGamesShop.Data;
+
+using BoardGames.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

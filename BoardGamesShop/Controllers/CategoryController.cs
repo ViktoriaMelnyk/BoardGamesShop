@@ -1,5 +1,6 @@
-﻿using BoardGamesShop.Data;
-using BoardGamesShop.Models;
+﻿
+using BoardGames.DataAccess;
+using BoardGames.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +42,7 @@ namespace BoardGamesShop.Controllers
             {            
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Kategoria utworzona pomyślnie";
                 return RedirectToAction("Index");
 
             }
@@ -75,6 +77,7 @@ namespace BoardGamesShop.Controllers
             {
                 _db.Categories.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Kategoria edytowana pomyślnie";
                 return RedirectToAction("Index");
 
             }
@@ -99,18 +102,21 @@ namespace BoardGamesShop.Controllers
         //POST
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(int? id)
+        public IActionResult DeletePOST(int? id)
         {
-            var obj = _db.Categories.Find(id);
-            if(obj == null)
+            var catFromDb = _db.Categories.Find(id);
+            if (catFromDb == null)
             {
+
                 return NotFound();
+
             }
 
-            
-                _db.Categories.Remove(obj);
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+
+            _db.Categories.Remove(catFromDb);
+            _db.SaveChanges();
+            TempData["success"] = "Kategoria usunięta pomyślnie";
+            return RedirectToAction("Index");
 
             
             

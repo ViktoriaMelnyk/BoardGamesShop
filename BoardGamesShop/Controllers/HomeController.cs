@@ -1,4 +1,5 @@
-﻿using BoardGamesShop.Models;
+﻿
+using BoardGames.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
