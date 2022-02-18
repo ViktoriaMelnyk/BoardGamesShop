@@ -1,5 +1,6 @@
 ﻿
 using BoardGames.DataAccess;
+using BoardGames.DataAccess.Repository.IRepository;
 using BoardGames.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,18 +9,18 @@ namespace BoardGamesShop.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _db;
 
 
 
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(IUnitOfWork db)
         {
             _db = db;
         }
         public IActionResult Index()
         {
             //Return a list to the view
-            IEnumerable<Category> categoryList = _db.Categories.ToList();
+            IEnumerable<Category> categoryList = _db.Category.GetAll();
 
             return View(categoryList);
         }
@@ -40,8 +41,8 @@ namespace BoardGamesShop.Controllers
             }
             if (ModelState.IsValid)
             {            
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _db.Category.Add(obj);
+                _db.Save();
                 TempData["success"] = "Kategoria utworzona pomyślnie";
                 return RedirectToAction("Index");
 
@@ -55,7 +56,7 @@ namespace BoardGamesShop.Controllers
             {
                 return NotFound();
             }
-            var catFromDb = _db.Categories.Find(id);
+            var catFromDb = _db.Category.GetFirstOrDefault(u=>u.Id==id);
             if (catFromDb == null)
             {
 
@@ -75,8 +76,8 @@ namespace BoardGamesShop.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _db.Category.Update(obj);
+                _db.Save();
                 TempData["success"] = "Kategoria edytowana pomyślnie";
                 return RedirectToAction("Index");
 
@@ -90,7 +91,7 @@ namespace BoardGamesShop.Controllers
             {
                 return NotFound();
             }
-            var catFromDb = _db.Categories.Find(id);
+            var catFromDb = _db.Category.GetFirstOrDefault(u => u.Id == id);
             if (catFromDb == null)
             {
 
@@ -104,7 +105,7 @@ namespace BoardGamesShop.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
-            var catFromDb = _db.Categories.Find(id);
+            var catFromDb = _db.Category.GetFirstOrDefault(u => u.Id == id);
             if (catFromDb == null)
             {
 
@@ -113,8 +114,8 @@ namespace BoardGamesShop.Controllers
             }
 
 
-            _db.Categories.Remove(catFromDb);
-            _db.SaveChanges();
+            _db.Category.Remove(catFromDb);
+            _db.Save();
             TempData["success"] = "Kategoria usunięta pomyślnie";
             return RedirectToAction("Index");
 
