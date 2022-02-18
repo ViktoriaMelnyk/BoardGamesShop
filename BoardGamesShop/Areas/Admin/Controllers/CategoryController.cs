@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoardGamesShop.Controllers
-{
+{[Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _db;
