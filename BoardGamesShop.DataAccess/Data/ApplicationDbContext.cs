@@ -10,5 +10,6 @@ namespace BoardGames.DataAccess
 
         }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Game> Games { get; set; }
     }
 }
