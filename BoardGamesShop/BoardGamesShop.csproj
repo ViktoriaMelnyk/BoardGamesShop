@@ -21,4 +21,8 @@
     <ProjectReference Include="..\BoardGamesShop.DataAccess\BoardGames.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\img\gamesImg\" />
+  </ItemGroup>
+
 </Project>

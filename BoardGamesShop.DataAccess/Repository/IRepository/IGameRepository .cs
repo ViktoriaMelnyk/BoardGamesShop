@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoardGames.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace BoardGames.DataAccess.Repository.IRepository
 {
-    public interface IUnitOfWork
+    public interface IGameRepository: IRepository<Game>
     {
-        ICategoryRepository Category { get; }
-        IGameRepository Game { get; }
-        void Save();
+        void Update(Game obj);
+        
     }
 }

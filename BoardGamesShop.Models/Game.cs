@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -31,11 +32,13 @@ namespace BoardGames.Models
         [Required]
         [Range(1, 10000)]
         public double Price10 { get; set; }
-
+        [ValidateNever]
         public string ImageUrl { get; set; }
         [Required]
+        
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
+        [ValidateNever]
         public Category Category { get; set; }
 
     }
