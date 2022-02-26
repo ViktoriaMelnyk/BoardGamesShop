@@ -1,0 +1,76 @@
+﻿@model ShoppingCart
+
+<form method="post">
+ 
+        <div class="card  container pt-4">
+            <div class="card-header bg-info ml-0  row ">
+                <div class="col-12 col-md-6">
+                    <h1 class="text-white">@Model.Game.Name</h1>
+                    <p class="text-white"> @Model.Game.Authors</p>
+                </div>
+                <div class="col-12 col-md-6 text-end pt-4">
+                    <span class="badge bg-warning pt-2" style="height:30px;">@Model.Game.Category.Name</span>
+                </div>
+            </div>
+            <div class="card-body row container">
+                <div class="container rounded p-2">
+                    <div class="row">
+                        <div class="col-8 col-lg-8">
+
+                            <div class="row pl-2">
+                                <h5 class="text-muted pb-2">Cena katalogowa: <strike>@Model.Game.ListPrice.ToString("0.00") zł</strike></h5>
+                            </div>
+                            <div class="row text-center pl-2"  style="font-weight:bold">
+                                <div class="p-1 col-2  border-bottom ">
+                                    <div>Ilość</div>
+                                </div>
+                                <div class="p-1 col-2 border-bottom">
+                                     <span class="badge bg-primary rounded-pill">1-3</span>
+                                </div>
+                                <div class="p-1 col-2  border-bottom">
+                                    <span class="badge bg-primary rounded-pill">3-10</span>
+                                </div>
+                                <div class="p-1 col-2 border-bottom">
+                                    <span class="badge bg-primary rounded-pill">10+</span>
+                                </div>
+                            </div>
+                            <div class="row text-center pl-2 mb-5" style="font-weight:bold">
+                                <div class="p-1 col-2 ">
+                                    <div>Cena</div>
+                                </div>
+                                <div class="p-1 col-2 ">
+                                    <div class="badge bg-primary rounded-pill">@Model.Game.Price.ToString("0.00") zł</div>
+                                </div>
+                                <div class="p-1 col-2 ">
+                                    <div class="badge bg-primary rounded-pill">@Model.Game.Price3.ToString("0.00") zł</div>
+                                </div>
+                                <div class="p-1 col-2">
+                                    <div class="badge bg-primary rounded-pill">@Model.Game.Price10.ToString("0.00") zł</div>
+                                </div>
+                            </div>
+                            <div class="row pl-2 mb-5">
+                                <p >@Html.Raw(Model.Game.Description)</p>
+                            </div>
+                            <div class="row pl-2">
+                                <div class="col-2 text-primary"><h4>Ilość</h4></div>
+                                <div class="col-10"><input asp-for="Count" class="form-control"  /></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-3 offset-lg-1 text-center">
+                            <img src="@Model.Game.ImageUrl" width="100%" class="rounded" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-12 col-md-6 pb-1">
+                        <a class="btn btn-success " asp-action="Index">Wstecz</a>
+                        <button type="submit" value="Add to Cart" class="btn btn-dark" >Do koszyka</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>
+
+

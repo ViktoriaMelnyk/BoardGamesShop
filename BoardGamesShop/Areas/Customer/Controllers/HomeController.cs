@@ -1,6 +1,7 @@
 ﻿
 using BoardGames.DataAccess.Repository.IRepository;
 using BoardGames.Models;
+using BoardGames.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -23,6 +24,18 @@ namespace BoardGamesShop.Controllers
         {
             IEnumerable<Game> gamesList = _unitofWork.Game.GetAll(includeProperties:"Category");
             return View(gamesList);
+        }
+        public IActionResult Details(int id)
+
+        {
+            ShoppingCart cartObj = new()
+            {
+                Count = 1,
+                Game = _unitofWork.Game.GetFirstOrDefault(u => u.Id == id, includeProperties: "Category")
+            };
+             return View(cartObj);
+
+
         }
 
         public IActionResult Privacy()
