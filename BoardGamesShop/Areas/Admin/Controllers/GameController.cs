@@ -2,6 +2,7 @@
 using BoardGames.DataAccess;
 using BoardGames.DataAccess.Repository.IRepository;
 using BoardGames.Models;
+using BoardGames.Models.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,41 +24,43 @@ namespace BoardGamesShop.Controllers
         }
         public IActionResult Index()
         {
-            //Return a list to the view
-            IEnumerable<Category> categoryList = _db.Category.GetAll();
-
-            return View(categoryList);
+            return View();
         }
         
         //GET
         public IActionResult Upsert(int? id)
         {
-            Game game = new();
-            IEnumerable<SelectListItem> CategoryList = _db.Category.GetAll().Select(
-                u =>new SelectListItem
+            GameVM gameVM = new()
+            {
+                Game = new(),
+                CategoryList = _db.Category.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString(),
-                }
-            );
+                }),
+            }
+;
             if (id == null || id == 0)
             {
                 //create
-                ViewBag.CategoryList=CategoryList;
-                return View(game);
+                return View(gameVM);
                 
             }
             else
             {
                 //update
-            }
+                gameVM.Game = _db.Game.GetFirstOrDefault(u => u.Id == id);
+                return View(gameVM);
 
-            return View(game);
+            }
+           
+
+
         }
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Game obj, IFormFile? file)
+        public IActionResult Upsert(GameVM obj, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
@@ -67,13 +70,29 @@ namespace BoardGamesShop.Controllers
                     string fileName = Guid.NewGuid().ToString();
                     var uploads = Path.Combine(wwwRootPath, @"img\gamesImg");
                     var extension = Path.GetExtension(file.FileName);
+                    if (obj.Game.ImageUrl != null)
+                    {
+                        var oldImgPath = Path.Combine(wwwRootPath,obj.Game.ImageUrl.TrimStart('\\'));
+                        if (System.IO.File.Exists(oldImgPath))
+                        {
+                            System.IO.File.Delete(oldImgPath);
+                        }
+                    }
                     using (var fileStreams = new FileStream(Path.Combine(uploads,fileName+ extension), FileMode.Create))
                     {
                         file.CopyTo(fileStreams);
                     }
-                    obj.ImageUrl = @"\img\gamesImg\" + fileName + extension;
+                    obj.Game.ImageUrl = @"\img\gamesImg\" + fileName + extension;
                 }
-                _db.Game.Add(obj);
+                if(obj.Game.Id == 0)
+                {
+                    _db.Game.Add(obj.Game);
+                }
+                else
+                {
+                    _db.Game.Update(obj.Game);
+                }
+                
                 _db.Save();
                 TempData["success"] = "Gra dodana pomyślnie";
                 return RedirectToAction("Index");
@@ -81,43 +100,40 @@ namespace BoardGamesShop.Controllers
             }
             return View(obj);
         }
-        //GET
-        public IActionResult Delete(int? id)
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var catFromDb = _db.Category.GetFirstOrDefault(u => u.Id == id);
-            if (catFromDb == null)
-            {
-
-                return NotFound();
-
-            }
-            return View(catFromDb);
+            var gameList = _db.Game.GetAll(includeProperties:"Category");
+            return Json(new { data = gameList });
         }
         //POST
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
+        [HttpDelete]
+     
+        public IActionResult Delete(int? id)
         {
-            var catFromDb = _db.Category.GetFirstOrDefault(u => u.Id == id);
-            if (catFromDb == null)
+            var obj = _db.Game.GetFirstOrDefault(u => u.Id == id);
+            if (obj == null)
             {
 
-                return NotFound();
+                return Json(new {success = false, message ="Error"});
 
             }
+            var oldImgPath = Path.Combine(_hostEnviroment.WebRootPath, obj.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImgPath))
+            {
+                System.IO.File.Delete(oldImgPath);
+            }
 
-
-            _db.Category.Remove(catFromDb);
+            _db.Game.Remove(obj);
             _db.Save();
-            TempData["success"] = "Kategoria usunięta pomyślnie";
-            return RedirectToAction("Index");
+           
+            return Json(new { success = true, message = "Usunięto pomyślnie" });
 
-            
-            
+
         }
+        #endregion
     }
+
 }
