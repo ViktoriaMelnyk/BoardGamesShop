@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BoardGamesShop.DataAccess\BoardGames.DataAccess.csproj" />
+    <ProjectReference Include="..\BoardGamesShop.Utility\BoardGames.Utility.csproj" />
   </ItemGroup>
 
   <ItemGroup>
