@@ -49,8 +49,20 @@ namespace BoardGamesShop.Controllers
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             shoppingCart.ApplicationUserId = claim.Value;
+            ShoppingCart cart = _unitofWork.ShoppingCart.GetFirstOrDefault(
+                u=>u.ApplicationUserId==claim.Value && u.GameId==shoppingCart.GameId);
 
-            _unitofWork.ShoppingCart.Add(shoppingCart);
+            if (cart == null)
+            {
+                _unitofWork.ShoppingCart.Add(shoppingCart);
+
+            }
+            else
+            {
+                _unitofWork.ShoppingCart.IncrementCount(cart, shoppingCart.Count);
+            }
+
+            
             _unitofWork.Save();
             return RedirectToAction("Index");
 
