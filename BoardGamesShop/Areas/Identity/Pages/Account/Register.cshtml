@@ -1,4 +1,5 @@
 ﻿@page
+@using BoardGamesShop.Utility
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -53,14 +54,20 @@
                 <label asp-for="Input.ConfirmPassword"></label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-             <div class="form-floating my-3 col-6">
-                <select class="form-select" asp-for="Input.Role" asp-items="@Model.Input.RoleList">
-                    <option disabled selected>--Wybierz Role--</option>
-                </select> 
-            </div>
-            <div class="form-floating my-3 col-6">
-                <select class="form-select" asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" style="display:none;"></select> 
-            </div>
+                @if (User.IsInRole(SD.Role_Admin))
+                {
+                         <div class="form-floating my-3 col-6">
+                            <select class="form-select" asp-for="Input.Role" asp-items="@Model.Input.RoleList">
+                                <option disabled selected>--Wybierz Rolę--</option>
+                            </select> 
+                        </div>
+                        <div class="form-floating my-3 col-6">
+                            <select class="form-select" asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" style="display:none;">
+                                <option disabled selected>--Wybierz Firmę--</option>
+                            </select> 
+                        </div>
+                }
+
             <button id="registerSubmit" type="submit" class=" btn btn-lg btn-primary">Register</button>
         </form>
 
