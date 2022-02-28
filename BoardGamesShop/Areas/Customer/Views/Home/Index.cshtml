@@ -9,7 +9,7 @@
                     <div class = "card p-3">
                         <img src="@game.ImageUrl" class="card-img-top rounded mb-3"/>
                         <div class="pl-1">
-                             <a asp-controller="Home" asp-action="Details" asp-route-gameId="@game.Id" class=" btn btn-link">@game.Name</a>
+                             <p class= "card-title ">@game.Name</p>
                             <p class= "card-title ">Ilość graczy: @game.MinPlayers-@game.MaxPlayers</p>
                             <p class= "card-title ">@game.Authors</p>
                         </div>
@@ -18,7 +18,7 @@
 
                         </div>
 
-
+                        <a asp-controller="Home" asp-action="Details" asp-route-gameId="@game.Id" class=" btn btn-dark">Więcej</a>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,8 @@ using BoardGames.DataAccess;
 using BoardGames.DataAccess.Repository.IRepository;
 using BoardGames.Models;
 using BoardGames.Models.ViewModels;
+using BoardGamesShop.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BoardGamesShop.Controllers
 {[Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class CompanyController : Controller
     {
         private readonly IUnitOfWork _db;

@@ -2,11 +2,14 @@
 using BoardGames.DataAccess;
 using BoardGames.DataAccess.Repository.IRepository;
 using BoardGames.Models;
+using BoardGamesShop.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BoardGamesShop.Controllers
 {[Area("Admin")]
+[Authorize(Roles = SD.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _db;

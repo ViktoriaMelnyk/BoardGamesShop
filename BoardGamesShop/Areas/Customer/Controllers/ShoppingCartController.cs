@@ -33,6 +33,35 @@ namespace BoardGamesShop.Areas.Customer.Controllers
             }
             return View(ShoppingCartVM);
         }
+        public IActionResult Plus(int cartId)
+        {
+            var cart = _unitofWork.ShoppingCart.GetFirstOrDefault(u => u.Id == cartId);
+            _unitofWork.ShoppingCart.IncrementCount(cart, 1);
+            _unitofWork.Save();
+            return RedirectToAction("Index");
+        }
+        public IActionResult Minus(int cartId)
+        {
+            var cart = _unitofWork.ShoppingCart.GetFirstOrDefault(u => u.Id == cartId);
+            if(cart.Count <= 1)
+            {
+                _unitofWork.ShoppingCart.Remove(cart);
+            }
+            else
+            {
+            _unitofWork.ShoppingCart.DecrementCount(cart, 1);
+            }
+
+            _unitofWork.Save();
+            return RedirectToAction("Index");
+        }
+        public IActionResult Remove(int cartId)
+        {
+            var cart = _unitofWork.ShoppingCart.GetFirstOrDefault(u => u.Id == cartId);
+            _unitofWork.ShoppingCart.Remove(cart);
+            _unitofWork.Save();
+            return RedirectToAction("Index");
+        }
         private double GetPrice(double quantity, double price, double price3, double price10)
         {
             if (quantity <= 3)

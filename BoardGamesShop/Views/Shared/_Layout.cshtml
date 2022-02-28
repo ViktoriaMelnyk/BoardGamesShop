@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using BoardGamesShop.Utility
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -23,34 +24,24 @@
 
       <div class="navbar-collapse collapse show" id="navbarColor01" style="">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Kategorie</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" asp-area="Admin" asp-controller="Game" asp-action="Index">Gry Planszowe</a>
-        </li>
-         <li class="nav-item">
-          <a class="nav-link" asp-area="Admin" asp-controller="Company" asp-action="Index">Firmy</a>
-        </li>
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+                            <li class="nav-item">
+                              <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Kategorie</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" asp-area="Admin" asp-controller="Game" asp-action="Index">Gry Planszowe</a>
+                            </li>
+                             <li class="nav-item">
+                              <a class="nav-link" asp-area="Admin" asp-controller="Company" asp-action="Index">Firmy</a>
+                            </li>
+                        }
+
          <li class="nav-item">
           <a class="nav-link" asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index"><i class="bi bi-cart3"></i></a>
         </li>
-@*        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
-          </div>
-        </li>*@
       </ul>
       <partial name ="_LoginPartial"/>
-@*      <form class="d-flex">
-        <input class="form-control me-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>*@
     </div>
   </div>
 </nav>
