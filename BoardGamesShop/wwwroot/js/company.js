@@ -8,16 +8,11 @@ function loadDataTable() {
             "url": "/Admin/Company/GetAll"
         },
         "columns": [
-        { "data": "name", "width": "15%" },
-        { "data": "phoneNumber", "width": "15%" },
-        { "data": "email", "width": "15%" },
-        { "data": "city", "width": "15%" },
-        { "data": "streetAddresss", "width": "15%" },
-        { "data": "postalCodee", "width": "15%" },
-        { "data": "listPrice", "width": "15%" },
-        { "data": "price3", "width": "15%" },
-        { "data": "price10", "width": "15%" },
-        { "data": "category.name", "width": "15%" },
+            { "data": "name", "width": "15%" },
+            { "data": "phoneNumber", "width": "15%" },
+            { "data": "city", "width": "15%" },
+            { "data": "streetAddress", "width": "15%" },
+            { "data": "postalCode", "width": "15%" },
             {
                 "data": "id",
                 "render": function (data) {

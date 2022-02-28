@@ -1,5 +1,5 @@
 ﻿@model Company
-<form method="post" asp-action="Upsert" enctype ="multipart/form-data">
+<form method="post" asp-action="Upsert" enctype ="multipart/form-data" class ="container-sm" style="max-width:50%;">
     <fieldset>
         <input hidden asp-for="Id"/>
 
@@ -13,27 +13,23 @@
             <input asp-for="Name" class="form-control"/>
             <span asp-validation-for ="Name" class="text-danger"></span>
         </div>
-        <div class="form-group mb-5">
+        <div class="form-group mb-3">
             <label asp-for="PhoneNumber" class="form-label mt-4">Numer telefonu:</label>
-            <textarea asp-for="PhoneNumber" class="form-control"></textarea>
+            <input asp-for="PhoneNumber" class="form-control"/>
             <span asp-validation-for ="PhoneNumber" class="text-danger"></span>
         </div>
-                <div class="form-group mb-5 col-6" >
-            <label asp-for="Email" class="form-label mt-4">Email:</label>
-            <input asp-for="Email" class="form-control"/>
-            <span asp-validation-for ="Email" class="text-danger"></span>
-        </div>
-                <div class="form-group mb-5 col-6">
+
+                <div class="form-group mb-3 col-6">
             <label asp-for="City" class="form-label mt-4">Miasto::</label>
             <input asp-for="City" class="form-control"/>
             <span asp-validation-for ="City" class="text-danger"></span>
         </div>
-        <div class="form-group mb-5 col-6">
+        <div class="form-group mb-3 col-6">
             <label asp-for="StreetAddress" class="form-label mt-4">Adres cd:</label>
             <input asp-for="StreetAddress" class="form-control"/>
             <span asp-validation-for ="StreetAddress" class="text-danger"></span>
         </div>
-         <div class="form-group mb-5 col-6">
+         <div class="form-group mb-3 col-6">
             <label asp-for="PostalCode" class="form-label mt-4">Kod pocztowy:</label>
             <input asp-for="PostalCode" class="form-control"/>
             <span asp-validation-for ="PostalCode" class="text-danger"></span>

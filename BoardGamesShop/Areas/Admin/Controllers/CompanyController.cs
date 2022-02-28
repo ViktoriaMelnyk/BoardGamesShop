@@ -80,7 +80,7 @@ namespace BoardGamesShop.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var companyList = _db.Game.GetAll();
+            var companyList = _db.Company.GetAll();
             return Json(new { data = companyList });
         }
         //POST
