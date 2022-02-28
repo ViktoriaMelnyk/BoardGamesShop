@@ -2,8 +2,10 @@
 using BoardGames.DataAccess.Repository.IRepository;
 using BoardGames.Models;
 using BoardGames.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace BoardGamesShop.Controllers
 {[Area("Customer")]
@@ -25,15 +27,32 @@ namespace BoardGamesShop.Controllers
             IEnumerable<Game> gamesList = _unitofWork.Game.GetAll(includeProperties:"Category");
             return View(gamesList);
         }
-        public IActionResult Details(int id)
+        public IActionResult Details(int gameid)
 
         {
             ShoppingCart cartObj = new()
             {
                 Count = 1,
-                Game = _unitofWork.Game.GetFirstOrDefault(u => u.Id == id, includeProperties: "Category")
+                GameId = gameid,
+                Game = _unitofWork.Game.GetFirstOrDefault(u => u.Id == gameid, includeProperties: "Category")
             };
              return View(cartObj);
+
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public IActionResult Details(ShoppingCart shoppingCart)
+
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            shoppingCart.ApplicationUserId = claim.Value;
+
+            _unitofWork.ShoppingCart.Add(shoppingCart);
+            _unitofWork.Save();
+            return RedirectToAction("Index");
 
 
         }

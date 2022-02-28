@@ -11,6 +11,8 @@ namespace BoardGames.DataAccess.Repository.IRepository
         ICategoryRepository Category { get; }
         IGameRepository Game { get; }
         ICompanyRepository Company { get; }
+        IShoppingCartRepository ShoppingCart { get; }
+        IApplicationUserRepository ApplicationUser { get; }
         void Save();
     }
 }
